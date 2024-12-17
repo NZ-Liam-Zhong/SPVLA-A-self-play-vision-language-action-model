@@ -6,5 +6,10 @@ This repo is adopted from [Openvla: An Open-Source Vision-Language-Action Model]
 
 **Run the Self-play code(example)** <br>
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py  --data_root_dir "/root/autodl-tmp/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/znz/openvla/object-self-fintune" --adapter_tmp_dir "/root/znz/openvla/object-self-fintune-weight" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 1000
-
-object-it1-ckpt:
+<br><br>
+object-it1-ckpt:<br>
+python experiments/robot/libero/run_libero_eval.py \
+  --model_family openvla \
+  --pretrained_checkpoint /root/znz/openvla/object-self-fintune/object-selfplay-post-training-it-0 \
+  --task_suite_name libero_object \
+  --center_crop True
