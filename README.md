@@ -10,7 +10,7 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py  --d
 object-it1-ckpt:<br>
 python experiments/robot/libero/run_libero_eval.py \
   --model_family openvla \
-  --pretrained_checkpoint /root/znz/openvla/object-self-fintune/object-selfplay-post-training-it-0 \
+  --pretrained_checkpoint /root/znz/openvla/object-self-fintune/object-selfplay-post-training-it-0-batch20-steps1000 \
   --task_suite_name libero_object \
   --center_crop True
 
