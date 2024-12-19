@@ -25,3 +25,4 @@ action logit min tensor(-30.3750, device='cuda:0', grad_fn=<MinBackward1>)<br>
 到<br>
 action logit max tensor(32.5000, device='cuda:0', grad_fn=<MaxBackward1>)<br>
 action logit min tensor(-13.5625, device='cuda:0', grad_fn=<MinBackward1>)<br>
+为了利用好激活函数softmax，应该最少限制在-10到10之间
