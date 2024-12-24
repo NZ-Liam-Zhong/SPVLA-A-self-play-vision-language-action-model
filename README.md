@@ -70,4 +70,6 @@ opponent_real_logps tensor([-7.7851, -7.4338, -7.6182, -6.8065, -7.3121, -7.5605
 Mbr><br>需要解决训练的不稳定性
 <br>**证明self-play的闭式解**<br>
 ![图片](https://github.com/user-attachments/assets/0b6d7a30-1276-4863-8240-a72c61cb2740)
+<br><br><br>
+beta设置为0.7<br><br>
 
