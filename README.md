@@ -74,8 +74,8 @@ Mbr><br>需要解决训练的不稳定性
 beta设置为0.7<br><br>
 python experiments/robot/libero/run_libero_eval.py \
   --model_family openvla \
-  --pretrained_checkpoint /root/autodl-tmp/object-self-fintune-25-6/try2\
-  --task_suite_name libero_object \
+  --pretrained_checkpoint /root/autodl-tmp/spatial-self-fintune-new2/try_ok_new\
+  --task_suite_name libero_spatial \
   --center_crop True
 
   torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py  --data_root_dir "/root/autodl-tmp/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-tmp/spatial-self-fintune-new2" --adapter_tmp_dir "/root/autodl-tmp/spatial-self-fintune-weight-new2" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 2e-4 --image_aug False --save_steps 500
