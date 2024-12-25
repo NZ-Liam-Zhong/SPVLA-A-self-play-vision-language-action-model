@@ -72,4 +72,12 @@ Mbr><br>需要解决训练的不稳定性
 ![图片](https://github.com/user-attachments/assets/0b6d7a30-1276-4863-8240-a72c61cb2740)
 <br><br><br>
 beta设置为0.7<br><br>
+python experiments/robot/libero/run_libero_eval.py \
+  --model_family openvla \
+  --pretrained_checkpoint /root/autodl-tmp/object-self-fintune/object-selfplay-post-training-it-0-batch20-steps1000 \
+  --task_suite_name libero_object \
+  --center_crop True
+
+  torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py  --data_root_dir "/root/autodl-tmp/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-tmp/object-self-fintune-new2" --adapter_tmp_dir "/root/autodl-tmp/object-self-fintune-weight-new2" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 2e-4 --image_aug False --save_steps 500
+<br><br>
 
