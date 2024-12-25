@@ -126,5 +126,18 @@ Task: pick up the black bowl between the plate and the ramekin and place it on t
 Starting episode 1...
 Floating point exception (core dumped)
 bash: --task_suite_name: command not found
-  
 
+
+
+<br><br>
+
+
+
+
+
+  
+python experiments/robot/libero/run_libero_eval.py \
+  --model_family openvla \
+  --pretrained_checkpoint /root/autodl-tmp/openvla-7b-finetuned-libero-spatial \
+  --task_suite_name libero_spatial \
+  --center_crop True
