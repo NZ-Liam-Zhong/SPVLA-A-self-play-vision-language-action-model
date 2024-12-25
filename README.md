@@ -92,5 +92,39 @@ python experiments/robot/libero/run_libero_eval.py \
   --pretrained_checkpoint /root/autodl-tmp/openvla-7b-finetuned-libero-spatial
   --task_suite_name libero_spatial \
   --center_crop True
+
+  <br><br>
+  (openvla) root@autodl-container-852f45bfea-b1111753:~/znz/openvla#  python experiments/robot/libero/run_libero_eval.py \
+  --model_family openvla \
+  --pretrained_checkpoint /root/autodl-tmp/openvla-7b-finetuned-libero-spatial
+  --task_suite_name libero_spatial \
+  --center_crop True
+2024-12-25 21:32:38.947795: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-12-25 21:32:38.979465: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-12-25 21:32:38.979500: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-12-25 21:32:38.980982: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-12-25 21:32:38.987062: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-12-25 21:32:39.681459: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /root/miniconda3/envs/openvla/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+2024-12-25 21:32:43.137142: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2348] TensorFlow was not built with CUDA kernel binaries compatible with compute capability 9.0. CUDA kernels will be jit-compiled from PTX, which could take 30 minutes or longer.
+ GenerateConfig(model_family='openvla', pretrained_checkpoint='/root/autodl-tmp/openvla-7b-finetuned-libero-spatial', load_in_8bit=False, load_in_4bit=False, center_crop=True, task_suite_name='libero_spatial', num_steps_wait=10, num_trials_per_task=50, run_id_note=None, local_log_dir='./experiments/logs', use_wandb=False, wandb_project='YOUR_WANDB_PROJECT', wandb_entity='YOUR_WANDB_ENTITY', seed=7)
+[*] Instantiating Pretrained VLA model
+[*] Loading in BF16 with Flash-Attention Enabled
+<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:01<00:00,  3.33it/s]
+Loaded model: <class 'transformers_modules.openvla.openvla-7b.31f090d05236101ebfc381b61c674dd4746d4ce0.modeling_prismatic.OpenVLAForActionPrediction'>
+Logging to local log file: ./experiments/logs/EVAL-libero_spatial-openvla-2024_12_25-21_32_51.txt
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Task suite: libero_spatial
+  0%|                                                                                                                                                                                                                             | 0/10 [00:00<?, ?it/s][Warning]: datasets path /root/znz/openvla/LIBERO/libero/libero/../datasets does not exist!
+[Warning]: datasets path /root/znz/openvla/LIBERO/libero/libero/../datasets does not exist!
+
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate                                                                                                                                          | 0/50 [00:00<?, ?it/s]
+Starting episode 1...
+Floating point exception (core dumped)
+bash: --task_suite_name: command not found
   
 
