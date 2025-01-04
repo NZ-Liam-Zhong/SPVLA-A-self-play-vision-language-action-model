@@ -168,6 +168,6 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py  --d
 
 python experiments/robot/libero/run_libero_eval.py \
   --model_family openvla \
-  --pretrained_checkpoint /root/autodl-tmp/spatial-self-fintune-001/001try \
+  --pretrained_checkpoint /root/autodl-fs/spatial-self-fintune-002/002 \
   --task_suite_name libero_spatial \
   --center_crop True
