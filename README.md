@@ -134,7 +134,30 @@ bash: --task_suite_name: command not found
 
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py  --data_root_dir "/root/autodl-tmp/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-tmp/object-self-fintune-001" --adapter_tmp_dir "/root/autodl-tmp/object-self-fintune-weight-001" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 1000
 
-<br>
+<br><br>
+
+normalized_loss tensor(0.3668, device='cuda:0', grad_fn=<DivBackward0>)
+action logit max tensor(80., device='cuda:0', grad_fn=<MaxBackward1>)
+action logit min tensor(-30.3750, device='cuda:0', grad_fn=<MinBackward1>)
+policy_generated_logps tensor([-0.5363, -0.4312, -0.4809, -0.4551, -0.4214, -0.4969, -0.5220, -0.4139,
+        -0.4825, -0.5190, -0.4813, -0.3952, -0.4699, -0.5303, -0.5558, -0.4357,
+        -0.5106, -0.5337, -0.5381, -0.4857], device='cuda:0',
+       grad_fn=<DivBackward0>)
+policy_real_logps tensor([-1.5006e+00, -1.0885e-02, -8.5359e-03, -2.0855e-02, -1.2409e-04,
+        -5.3313e-01, -5.3277e-03, -1.1909e+00, -7.7429e-02, -1.0546e+00,
+        -1.1074e+00, -3.9870e-03, -4.1570e-03, -1.7525e-01, -1.6335e-02,
+        -6.3176e-01, -5.1611e-01, -4.3150e-01, -2.5046e-02, -2.2378e-02],
+       device='cuda:0', grad_fn=<DivBackward0>)
+opponent_generated_logps tensor([-0.5363, -0.4312, -0.4809, -0.4551, -0.4214, -0.4969, -0.5220, -0.4139,
+        -0.4825, -0.5190, -0.4813, -0.3952, -0.4699, -0.5303, -0.5558, -0.4357,
+        -0.5106, -0.5337, -0.5381, -0.4857], device='cuda:0')
+opponent_real_logps tensor([-1.5006e+00, -1.0885e-02, -8.5359e-03, -2.0855e-02, -1.2409e-04,
+        -5.3313e-01, -5.3277e-03, -1.1909e+00, -7.7429e-02, -1.0546e+00,
+        -1.1074e+00, -3.9870e-03, -4.1570e-03, -1.7525e-01, -1.6335e-02,
+        -6.3176e-01, -5.1611e-01, -4.3150e-01, -2.5046e-02, -2.2378e-02],
+       device='cuda:0')
+
+<br><br><br>
 
 
 
