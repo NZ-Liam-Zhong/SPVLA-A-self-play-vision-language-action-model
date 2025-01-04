@@ -164,3 +164,10 @@ opponent_real_logps tensor([-1.5006e+00, -1.0885e-02, -8.5359e-03, -2.0855e-02, 
 
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py  --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-tmp/spatial-self-fintune-001" --adapter_tmp_dir "/root/autodl-tmp/spatial-self-fintune-weight-001" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 1000
 <br><br>
+
+
+python experiments/robot/libero/run_libero_eval.py \
+  --model_family openvla \
+  --pretrained_checkpoint /root/autodl-tmp/spatial-self-fintune-001/001try \
+  --task_suite_name libero_spatial \
+  --center_crop True
