@@ -147,7 +147,7 @@ def spin_loss(
         pi_logratios = policy_real_logps - policy_generated_logps
         ref_logratios = opponent_real_logps - opponent_generated_logps
 
-        beta=0.2
+        beta=0.7
 
         if reference_free:
             ref_logratios = 0
