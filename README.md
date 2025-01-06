@@ -1,5 +1,5 @@
 # SPVLA: A Self-Play Vision-Language-Action Model
-Author: Ningze Zhong, Bo Wu<br>
+Author: Ningze Zhong, Bo Wu<br> 
 Institution: MIT-IBM Watsons AI Lab, Sun Yat-sen University<br>
 
 This repo is adopted from [Openvla: An Open-Source Vision-Language-Action Model](https://github.com/openvla/openvla)
