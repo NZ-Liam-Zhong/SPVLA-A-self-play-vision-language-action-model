@@ -171,3 +171,8 @@ python experiments/robot/libero/run_libero_eval.py \
   --pretrained_checkpoint /root/autodl-fs/spatial-self-fintune-002/002 \
   --task_suite_name libero_spatial \
   --center_crop True
+
+
+
+<br><br>
+1.wandb看loss和梯度曲线
