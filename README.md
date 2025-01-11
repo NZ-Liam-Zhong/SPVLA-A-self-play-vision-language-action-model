@@ -175,4 +175,5 @@ python experiments/robot/libero/run_libero_eval.py \
 
 
 <br><br>
-1.wandb看loss和梯度曲线
+1.wandb看loss和梯度曲线<br>
+2.loss平滑项这样可以没那么抖
