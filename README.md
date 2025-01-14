@@ -190,4 +190,12 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 evaluate:<br>
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-tmp/spatial-self-fintune-002/results --task_suite_name libero_spatial --center_crop True
 
-
+<br>
+# episodes completed so far: 500
+# successes: 416 (83.2%)
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [30:41<00:00, 36.83s/it]
+Current task success rate: 0.68██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [30:41<00:00, 41.17s/it]
+Current total success rate: 0.832
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [4:16:42<00:00, 1540.20s/it]
+Exception ignored in: <function MjRenderContext.__del__ at 0x7f268f25c3a0>
+Traceback (most recent call last):
