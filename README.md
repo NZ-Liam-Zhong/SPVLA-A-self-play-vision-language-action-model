@@ -1,6 +1,4 @@
 # SPVLA: A Self-Play Vision-Language-Action Model
-Author: Ningze Zhong, Bo Wu<br> 
-Institution: MIT-IBM Watsons AI Lab, Sun Yat-sen University<br>
 
 This repo is adopted from [Openvla: An Open-Source Vision-Language-Action Model](https://github.com/openvla/openvla)
 
@@ -158,6 +156,9 @@ opponent_real_logps tensor([-1.5006e+00, -1.0885e-02, -8.5359e-03, -2.0855e-02, 
        device='cuda:0')
 
 <br><br><br>
+
+对标的数据<br>
+![图片](https://github.com/user-attachments/assets/ebfd5ecf-95a1-408d-beea-55b42717ba80)
 
 
 
