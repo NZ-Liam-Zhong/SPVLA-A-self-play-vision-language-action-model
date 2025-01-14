@@ -172,6 +172,9 @@ python experiments/robot/libero/run_libero_eval.py \
   --task_suite_name libero_spatial \
   --center_crop True
 
+重新进行训练
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-tmp/spatial-self-fintune-002" --adapter_tmp_dir "/root/autodl-tmp/spatial-self-fintune-weight-002" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 1000 
+
 
 
 <br><br>
