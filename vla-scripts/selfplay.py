@@ -514,6 +514,7 @@ def finetune(cfg: FinetuneConfig) -> None:
             opponent_real_logps,
             opponent_generated_logps,
         )
+            losses=losses / cfg.grad_accumulation_steps
             losses.backward()
         
 
