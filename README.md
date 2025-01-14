@@ -181,3 +181,16 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 1.wandb看loss和梯度曲线<br>
 2.loss平滑项这样可以没那么抖<br>
 3.loss的gradient norm曲线<br>
+
+1000组在
+/root/autodl-tmp/spatial-self-fintune-002/results
+损失函数
+![图片](https://github.com/user-attachments/assets/5d9c3091-2ef2-4382-9b74-212d57aef5e6)
+evaluate:<br>
+python experiments/robot/libero/run_libero_eval.py \
+  --model_family openvla \
+  --pretrained_checkpoint /root/autodl-tmp/spatial-self-fintune-002/results \
+  --task_suite_name libero_spatial \
+  --center_crop True
+
+
