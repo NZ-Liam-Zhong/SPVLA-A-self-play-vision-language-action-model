@@ -206,6 +206,36 @@ Traceback (most recent call last):
 ![图片](https://github.com/user-attachments/assets/6dbb4196-bdfa-455e-857c-94c138acb772)\
 ![图片](https://github.com/user-attachments/assets/b5bbe44d-9c7b-43bc-97fc-9c96b4a58913)\
 
+<br><br><br>
+参考这个改，改成跳过太难的任务\
+\
+# 定义 loss 阈值
+loss_threshold = 1.0  # 根据需求调整\
+device = losses.device\
+
+# 筛选出有效的 losses（小于阈值）\
+valid_mask = losses < loss_threshold\
+filtered_losses = torch.where(valid_mask, losses, torch.tensor(0.0, device=device))\
+
+# 计算有效 loss 的数量\
+valid_loss_count = valid_mask.sum().item()\
+
+# 动态调整 grad_accumulation_steps\
+effective_grad_accumulation_steps = max(valid_loss_count, 1)  # 防止为 0\
+
+# 打印调试信息\
+print("Valid Loss Count:", valid_loss_count)\
+print("Effective Grad Accumulation Steps:", effective_grad_accumulation_steps)\
+
+# 归一化有效的 losses
+normalized_filtered_losses = filtered_losses / effective_grad_accumulation_steps\
+
+# 反向传播\
+normalized_filtered_losses.backward()\
+
+<br><br>
+
+
 
 
 
