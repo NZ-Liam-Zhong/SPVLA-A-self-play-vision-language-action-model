@@ -200,9 +200,13 @@ Current total success rate: 0.832
 Exception ignored in: <function MjRenderContext.__del__ at 0x7f268f25c3a0>
 Traceback (most recent call last):
 
-![图片](https://github.com/user-attachments/assets/4b628e17-ea04-477d-8f02-04263cfebbb9)
-![图片](https://github.com/user-attachments/assets/901d4667-2d0d-40fb-9c25-bcec2a86acab)
-![图片](https://github.com/user-attachments/assets/d5c6222a-602a-4bd2-9dbe-fe14c1d60a14)
+![图片](https://github.com/user-attachments/assets/4b628e17-ea04-477d-8f02-04263cfebbb9)\
+![图片](https://github.com/user-attachments/assets/901d4667-2d0d-40fb-9c25-bcec2a86acab)\
+![图片](https://github.com/user-attachments/assets/d5c6222a-602a-4bd2-9dbe-fe14c1d60a14)\
+![图片](https://github.com/user-attachments/assets/6dbb4196-bdfa-455e-857c-94c138acb772)\
+![图片](https://github.com/user-attachments/assets/b5bbe44d-9c7b-43bc-97fc-9c96b4a58913)\
+
+
 
 
 
