@@ -235,7 +235,8 @@ normalized_filtered_losses.backward()\
 
 <br><br>
 
-
+现在尝试skip hard <br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay_skip_hard.py  --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-tmp/spatial-self-fintune-skiphard" --adapter_tmp_dir "/root/autodl-tmp/spatial-self-fintune-weight-skiphard" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 1000
 
 
 
