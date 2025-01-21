@@ -248,6 +248,10 @@ loss_tensor大概在0.45~0.57之间
 也可以看出图片处理成了pixel values为小数的格式
 
 ![image](https://github.com/user-attachments/assets/12d10f17-3c85-45a2-9c1d-e6ce5e9c481c)
+更多结果
+
+![image](https://github.com/user-attachments/assets/46d95c42-ae5b-4441-8800-ed5c41bcb8f8)
+
 
 
 
