@@ -457,6 +457,10 @@ def finetune(cfg: FinetuneConfig) -> None:
 
             #print("output_logits",output.logits.shape)
 
+            
+            #这里需要修改一下
+            mask = action_gt > action_tokenizer.action_token_begin_idx
+
             # Compute Accuracy and L1 Loss for Logging
             action_logits = output.logits[:, vla.module.vision_backbone.featurizer.patch_embed.num_patches : -1]
 
