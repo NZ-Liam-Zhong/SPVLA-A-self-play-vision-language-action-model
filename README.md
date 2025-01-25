@@ -252,6 +252,15 @@ loss_tensor大概在0.45~0.57之间
 
 ![image](https://github.com/user-attachments/assets/46d95c42-ae5b-4441-8800-ed5c41bcb8f8)
 
+找到原因了！<br>
+重要性采样定义<br>
+![image](https://github.com/user-attachments/assets/8f0be1de-3617-4ff2-bdc5-f7dfff9c41bd)<br>
+台湾大学hungyi lee课程<br>
+![image](https://github.com/user-attachments/assets/8efe4c18-2774-4ce0-b70f-5cbe849be5b1)<br>
+当两个差别大的时候会导致方差大，难以收敛<br>
+尝试解决重要性采样的问题<br>
+如何解决？正在阅读 https://math.arizona.edu/~tgk/mc/book_chap6.pdf
+
 
 
 
