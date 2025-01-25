@@ -253,6 +253,11 @@ loss_tensor大概在0.45~0.57之间
 ![image](https://github.com/user-attachments/assets/46d95c42-ae5b-4441-8800-ed5c41bcb8f8)
 
 找到原因了！<br>
+自博弈的loss<br>
+![image](https://github.com/user-attachments/assets/1193fbdb-3a90-4342-a417-8fb2d1c9ebe9)<br>
+来源于<br>
+![image](https://github.com/user-attachments/assets/70e795da-8fbb-4e18-8746-a93075b4f667)
+事实上可以看成减少两个分布之间的重要性采样，如果差别大就会方差大难以学习效果不好<br>
 重要性采样定义<br>
 ![image](https://github.com/user-attachments/assets/8f0be1de-3617-4ff2-bdc5-f7dfff9c41bd)<br>
 台湾大学hungyi lee课程<br>
