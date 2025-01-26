@@ -267,7 +267,11 @@ loss_tensor大概在0.45~0.57之间
 如何解决？正在阅读 https://math.arizona.edu/~tgk/mc/book_chap6.pdf
 
 
+1.openvla (bc) 2.pi0(FM) 3.RDT(DP) 4.RT1(trans) 5.RT2(LLM + bc)
 
+(1)RTX 8*H100 
+Open X Embodiment: Generalist > Specialists?
+Openvla RTX pretrained finetune LIEBRO
 
 
 
