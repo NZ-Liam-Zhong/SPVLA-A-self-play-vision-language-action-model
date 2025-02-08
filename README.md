@@ -274,6 +274,8 @@ Open X Embodiment: Generalist > Specialists?
 Openvla RTX pretrained finetune LIEBRO
 
 
+分析<br>
+![image](https://github.com/user-attachments/assets/8f13b693-59c2-4fa2-aaa4-86cbf19c8bcf)
 
 
 
