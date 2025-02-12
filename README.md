@@ -288,4 +288,9 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 beta=0.6 eta=0.1<br>
 ![image](https://github.com/user-attachments/assets/1be6e66b-343c-4caf-aade-9723622da771)
 ![image](https://github.com/user-attachments/assets/c6e3a2da-79db-43dc-badf-b1e396cd5941)
+<br>
 
+文件位置<br>
+/root/autodl-fs/entropy-100-001/01<br>
+test的时候<br>
+python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/entropy-100-001/01 --task_suite_name libero_spatial --center_crop True
