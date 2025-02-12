@@ -275,7 +275,14 @@ Openvla RTX pretrained finetune LIEBRO
 
 
 分析<br>
-![image](https://github.com/user-attachments/assets/8f13b693-59c2-4fa2-aaa4-86cbf19c8bcf)
+![image](https://github.com/user-attachments/assets/8f13b693-59c2-4fa2-aaa4-86cbf19c8bcf)<br><br>
+
+![6cabf12042766aee40db3fb382ce8b7](https://github.com/user-attachments/assets/b211c065-47a6-453b-a9d8-f6e0e1250055)<br>
+![a0cd59f933bfbd20424b2f6d806433b](https://github.com/user-attachments/assets/4f91e46a-3e01-40a8-9f73-2c7d92a334b0)<br>
+![b3e928f9f420d2a50d1a2b957a4b874](https://github.com/user-attachments/assets/2a1b3f68-240c-4971-af86-cd9aa0bf6d93)<br>
+
+
+
 
 
 
