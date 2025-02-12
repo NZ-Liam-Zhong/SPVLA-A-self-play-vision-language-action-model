@@ -285,5 +285,7 @@ Openvla RTX pretrained finetune LIEBRO
 <br>加了entropy之后<br>
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-fs/spatial-self-fintune-entropy" --adapter_tmp_dir "/root/autodl-fs/spatial-self-fintune-weight-entropy" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 100
 
-
+beta=0.6 eta=0.1<br>
+![image](https://github.com/user-attachments/assets/1be6e66b-343c-4caf-aade-9723622da771)
+![image](https://github.com/user-attachments/assets/c6e3a2da-79db-43dc-badf-b1e396cd5941)
 
