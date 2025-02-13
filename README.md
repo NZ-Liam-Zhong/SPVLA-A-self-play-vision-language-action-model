@@ -294,3 +294,7 @@ beta=0.6 eta=0.1<br>
 /root/autodl-fs/entropy-100-001/01<br>
 test的时候<br>
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/entropy-100-001/01 --task_suite_name libero_spatial --center_crop True
+
+<br>修改参数<br>   beta=0.798
+        eta=0.002<br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-fs/spatial-self-fintune-entropy" --adapter_tmp_dir "/root/autodl-fs/spatial-self-fintune-weight-entropy" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
