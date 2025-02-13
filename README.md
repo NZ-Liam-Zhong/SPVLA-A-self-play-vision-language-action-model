@@ -289,6 +289,7 @@ beta=0.6 eta=0.1<br>
 ![image](https://github.com/user-attachments/assets/1be6e66b-343c-4caf-aade-9723622da771)
 ![image](https://github.com/user-attachments/assets/c6e3a2da-79db-43dc-badf-b1e396cd5941)
 <br>
+![e94faff6e55e38970c62529e25aa9e0](https://github.com/user-attachments/assets/088e2ab7-ff4e-49b6-accd-3d34b93e9f98)
 
 文件位置<br>
 /root/autodl-fs/entropy-100-001/01<br>
