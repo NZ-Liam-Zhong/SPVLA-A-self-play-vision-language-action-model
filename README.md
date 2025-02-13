@@ -298,7 +298,7 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 
 <br>修改参数<br>   beta=0.798
         eta=0.002<br>
-torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-fs/spatial-self-fintune-entropy" --adapter_tmp_dir "/root/autodl-fs/spatial-self-fintune-weight-entropy" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-fs/spatial-self-fintune-entropy3" --adapter_tmp_dir "/root/autodl-fs/spatial-self-fintune-weight-entropy3" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
 
 
 <br>位置在/root/autodl-fs/spatial-self-fintune-entropy2/try2<br>
@@ -306,3 +306,7 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/spatial-self-fintune-entropy2/try2 --task_suite_name libero_spatial --center_crop True
 
 ![image](https://github.com/user-attachments/assets/9780ef29-5d15-4d75-a4f8-45dd6786b548)
+
+
+再尝试一下0.5，0.1<br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --run_root_dir "/root/autodl-fs/spatial-self-fintune-entropy3" --adapter_tmp_dir "/root/autodl-fs/spatial-self-fintune-weight-entropy3" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
