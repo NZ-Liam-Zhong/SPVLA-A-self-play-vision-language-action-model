@@ -1,5 +1,5 @@
 """
-selfplay.py
+finetune.py
 
 Simple script for parameter-efficient fine-tuning of OpenVLA models loaded through the HuggingFace AutoClasses, using
 HuggingFace PEFT library for low-rank adaptation (LoRA).
@@ -24,6 +24,7 @@ from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
+import matplotlib.pyplot as plt
 
 import draccus
 import torch
@@ -38,7 +39,7 @@ from transformers import AutoModelForVision2Seq, AutoProcessor, BitsAndBytesConf
 from transformers import AutoConfig, AutoImageProcessor
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
-import wandb
+# import wandb
 from prismatic.models.backbones.llm.prompting import PurePromptBuilder, VicunaV15ChatPromptBuilder
 from prismatic.util.data_utils import PaddedCollatorForActionPrediction
 from prismatic.vla.action_tokenizer import ActionTokenizer
@@ -83,7 +84,7 @@ class FinetuneConfig:
     # fmt: off
 
     #object的finetune
-    vla_path: str = "/home/wy/znz/openvla/models--openvla--openvla-7b-finetuned-libero-object/snapshots/287d6cfdf12d07b1449505f66d9bf3550257e9b3"                            # Path to OpenVLA model (on HuggingFace Hub)
+    vla_path: str = "/root/autodl-tmp/openvla-7b-finetuned-libero-spatial"                            # Path to OpenVLA model (on HuggingFace Hub)
 
     # Directory Paths
     data_root_dir: Path = Path("datasets/open-x-embodiment")        # Path to Open-X dataset directory
@@ -93,8 +94,9 @@ class FinetuneConfig:
 
     # Fine-tuning Parameters
     batch_size: int = 16                                            # Fine-tuning batch size
-    max_steps: int = 200_000                                        # Max number of fine-tuning steps
-    save_steps: int = 5000                                          # Interval for checkpoint saving
+    #max_steps: int = 200_000
+    max_steps: int = 3_000                                        # Max number of fine-tuning steps
+    save_steps: int = 1000                                          # Interval for checkpoint saving
     learning_rate: float = 2e-5                                     # Fine-tuning learning rate
     grad_accumulation_steps: int = 1                                # Gradient accumulation steps
     image_aug: bool = True                                          # Whether to train with image augmentations
@@ -111,9 +113,9 @@ class FinetuneConfig:
                                                                     #   => CAUTION: Reduces memory but hurts performance
 
     # Tracking Parameters
-    wandb_project: str = "openvla"                                  # Name of W&B project to log to (use default!)
-    wandb_entity: str = "stanford-voltron"                          # Name of entity to log under
-    run_id_note: Optional[str] = None                               # Extra note for logging, Weights & Biases
+    # wandb_project: str = "openvla"                                  # Name of W&B project to log to (use default!)
+    # wandb_entity: str = "stanford-voltron"                          # Name of entity to log under
+    # run_id_note: Optional[str] = None                               # Extra note for logging, Weights & Biases
 
     # fmt: on
 
@@ -146,8 +148,10 @@ def spin_loss(
         """
         pi_logratios = policy_real_logps - policy_generated_logps
         ref_logratios = opponent_real_logps - opponent_generated_logps
+        entropy_regular=opponent_real_logps - policy_generated_logps
 
-        beta=0.7
+        beta=0.5
+        eta=0.1
 
         if reference_free:
             ref_logratios = 0
@@ -155,25 +159,27 @@ def spin_loss(
         logits = pi_logratios - ref_logratios
 
         if loss_type == "sigmoid":
-            print("we are using sigmoid")
-            losses = -F.logsigmoid(beta * logits)
+            #print("we are using sigmoid")
+            losses = -F.logsigmoid(beta * logits+eta*entropy_regular)
         elif loss_type == "hinge":
-            print("we are using hinge")
-            losses = torch.relu(1 - beta * logits)
+            #print("we are using hinge")
+            losses = torch.relu(1 - beta * logits+eta*entropy_regular)
         else:
             raise ValueError(f"Unknown loss type: . Should be one of ['sigmoid', 'hinge']")
 
         real_rewards = beta * (policy_real_logps - opponent_real_logps).detach()
         generated_rewards = beta * (policy_generated_logps - opponent_generated_logps).detach()
 
-        print(f"losses: {losses}")
-        print(f"policy_real_logps: {policy_real_logps}")
-        print(f"policy_generated_logps: {policy_generated_logps}")
-        print(f"opponent_real_logps: {opponent_real_logps}")
-        print(f"opponent_generated_logps: {opponent_generated_logps}")
-        print(f"logits: {logits}")
-        print(f"real_rewards: {real_rewards}")
-        print(f"generated_rewards: {generated_rewards}")
+        # print(f"losses: {losses}")
+        # print(f"policy_real_logps: {policy_real_logps}")
+        # print(f"policy_generated_logps: {policy_generated_logps}")
+        # print(f"opponent_real_logps: {opponent_real_logps}")
+        # print(f"opponent_generated_logps: {opponent_generated_logps}")
+        # print(f"logits: {logits}")
+        # print(f"real_rewards: {real_rewards}")
+        # print(f"generated_rewards: {generated_rewards}")
+
+        losses = losses.mean()
         
         return losses, real_rewards, generated_rewards
 
@@ -203,18 +209,44 @@ def _get_batch_logps(
         # dummy token; we'll ignore the losses on these tokens later
         #labels[labels == self.label_pad_token_id] = 0
 
-        per_token_logps = torch.gather(logits.log_softmax(-1), dim=2, index=labels.unsqueeze(2)).squeeze(2)
-
+        # print("logits shape",logits.shape)
+        # print("labels.unsqueeze(2) shape",labels.unsqueeze(2).shape)
+        # print("Max label index:", labels.max())
+        # print("Min label index:", labels.min())
         # if average_log_prob:
         #     return (per_token_logps * loss_mask).sum(-1) / loss_mask.sum(-1)
         # else:
         #     return (per_token_logps * loss_mask).sum(-1)
+        #device = torch.device('cuda:0')  # 选择 cuda:0 设备
+
+        #device = logits.device
+        #loss_mask=torch.ones(1,37).to(device)
+        loss_mask = (labels != -100).int().to(labels.device)
+        # print("mask",loss_mask)
+        labels = labels.clone()  # Use .clone() to avoid inplace modification
+        labels[labels == -100] = 0
+        # print("logits shape",logits.shape)
+        # print("labels.unsqueeze(2) shape",labels.unsqueeze(2).shape)
+        # print("Max label index:", labels.max())
+        # print("Min label index:", labels.min())
 
 
-        loss_mask=torch.ones(1,5)
+        #下面是原来的代码
+        #per_token_logps = torch.gather(logits.log_softmax(-1), dim=2, index=labels.unsqueeze(2)).squeeze(2)
+        # 对 logits 的每个值除以 10
+        #scaled_logits = logits / 10
+        # 计算 log softmax
+        log_softmax_logits = logits.log_softmax(-1)
+        # 按照 labels 的索引提取每个 token 的 log probability
+        per_token_logps = torch.gather(log_softmax_logits, dim=2, index=labels.unsqueeze(2)).squeeze(2)
 
-        print("这一托per_token_logps",per_token_logps)
-        print("loss mask",loss_mask)
+
+
+        # print("这一托per_token_logps",per_token_logps)
+        # print("loss mask",loss_mask)
+
+        # print("这一托per_token_logps",per_token_logps)
+        # print("loss mask",loss_mask)
 
         if average_log_prob:
             return (per_token_logps * loss_mask).sum(-1) / loss_mask.sum(-1)
@@ -238,6 +270,8 @@ def finetune(cfg: FinetuneConfig) -> None:
     torch.cuda.set_device(device_id := distributed_state.local_process_index)
     torch.cuda.empty_cache()
 
+    epoch_losses = [] 
+
     # Configure Unique Experiment ID & Log Directory
     exp_id = (
         f"{cfg.vla_path.split('/')[-1]}+{cfg.dataset_name}"
@@ -248,8 +282,8 @@ def finetune(cfg: FinetuneConfig) -> None:
         exp_id += f"+lora-r{cfg.lora_rank}+dropout-{cfg.lora_dropout}"
     if cfg.use_quantization:
         exp_id += "+q-4bit"
-    if cfg.run_id_note is not None:
-        exp_id += f"--{cfg.run_id_note}"
+    # if cfg.run_id_note is not None:
+    #     exp_id += f"--{cfg.run_id_note}"
     if cfg.image_aug:
         exp_id += "--image_aug"
 
@@ -354,7 +388,7 @@ def finetune(cfg: FinetuneConfig) -> None:
     #     prompt_builder_fn=PurePromptBuilder if "v01" not in cfg.vla_path else VicunaV15ChatPromptBuilder,
     # )
     # ---
-    print("action_tokenizer",action_tokenizer)
+    # print("action_tokenizer",action_tokenizer)
     batch_transform= RLDSBatchTransform(
         action_tokenizer,
         processor.tokenizer,
@@ -395,9 +429,9 @@ def finetune(cfg: FinetuneConfig) -> None:
 
     
 
-    # Initialize Logging =>> W&B
-    if distributed_state.is_main_process:
-        wandb.init(entity=cfg.wandb_entity, project=cfg.wandb_project, name=f"ft+{exp_id}")
+    # # Initialize Logging =>> W&B
+    # if distributed_state.is_main_process:
+    #     wandb.init(entity=cfg.wandb_entity, project=cfg.wandb_project, name=f"ft+{exp_id}")
 
     # Deque to store recent train metrics (used for computing smoothened metrics for gradient accumulation)
     recent_losses = deque(maxlen=cfg.grad_accumulation_steps)
@@ -429,7 +463,7 @@ def finetune(cfg: FinetuneConfig) -> None:
                     pixel_values=batch["pixel_values"].to(torch.bfloat16).to(device_id),
                     labels=batch["labels"],
                 )
-                loss = output.loss
+                loss = output.loss #7-13
 
                 ##########################################
                 ############ref_model输出##################
@@ -450,6 +484,7 @@ def finetune(cfg: FinetuneConfig) -> None:
 
             # Normalize loss to account for gradient accumulation
             normalized_loss = loss / cfg.grad_accumulation_steps
+            print("normalized_loss",normalized_loss)
 
             # Backward pass
             #原来的loss
@@ -457,12 +492,10 @@ def finetune(cfg: FinetuneConfig) -> None:
 
             #print("output_logits",output.logits.shape)
 
-            
-            #这里需要修改一下
-            mask = action_gt > action_tokenizer.action_token_begin_idx
-
             # Compute Accuracy and L1 Loss for Logging
             action_logits = output.logits[:, vla.module.vision_backbone.featurizer.patch_embed.num_patches : -1]
+
+            
 
             #ref_model输出
             ref_action_logits = ref_output.logits[:, vla.module.vision_backbone.featurizer.patch_embed.num_patches : -1]
@@ -474,59 +507,81 @@ def finetune(cfg: FinetuneConfig) -> None:
             
 
             #这个输出非常重要
-            print("action_logits",action_logits)
+            #print("action_logits",action_logits)
+            print("action logit max",torch.max(action_logits))
+            print("action logit min",torch.min(action_logits))
 
             action_preds = action_logits.argmax(dim=2)
 
+            # print(" ref_action_preds",ref_action_preds)
+            # print("action_preds",action_preds)
+
             #这个输出非常重要
-            print("action_preds",action_preds)
+            #print("action_preds",action_preds)
 
 
             action_gt = batch["labels"][:, 1:].to(action_preds.device)
+            # print("action_gt",action_gt)
+            # print("action_preds",action_preds)
+            # print("action_logits",action_logits)
 
 
-            #重要，首先预测mask
-            print("mask",mask)
+            
 
 
             #这里开始计算spin，首先action_logits是预测的logits，action_preds是最大的输出，action_gt是真实的标签，
             #关键的求概率部分
+            #print("action_logits",action_logits.shape)
+            #print("action_preds",action_preds.shape)
+            # action_logits torch.Size([16, 37, 32064])
+            # action_preds torch.Size([16, 37])
 
             policy_generated_logps = _get_batch_logps(
-            action_logits,
+            action_logits,#(-15,60)
             action_preds,
             average_log_prob=True,
         )
+            print("policy_generated_logps",policy_generated_logps)
+
             policy_real_logps = _get_batch_logps(
             action_logits,
             action_gt,
             average_log_prob=True,
         )
+            print("policy_real_logps",policy_real_logps)
             opponent_generated_logps = _get_batch_logps(
-            ref_action_logits,
+            ref_action_logits,#(-30,80)
             ref_action_preds,
             average_log_prob=True,
         )
+            print("opponent_generated_logps",opponent_generated_logps)
             opponent_real_logps = _get_batch_logps(
             ref_action_logits,
             action_gt,
             average_log_prob=True,
         )
+            print("opponent_real_logps",opponent_real_logps)
             losses, real_rewards, generated_rewards = spin_loss(
             policy_real_logps,
             policy_generated_logps,
             opponent_real_logps,
             opponent_generated_logps,
         )
-            losses=losses / cfg.grad_accumulation_steps
-            losses.backward()
+            losses2=losses/ cfg.grad_accumulation_steps
+            losses2.backward()#0.6
+
+            #看看我的losses是什么
+            print("losses",losses)
         
 
 
-            #这个输出非常重要
-            print("action_gt",action_gt)
+            # #这个输出非常重要
+            # print("action_gt",action_gt)
 
             mask = action_gt > action_tokenizer.action_token_begin_idx
+
+            #重要，首先预测mask
+            # print("mask",mask)
 
             #print("action_logits",action_logits)
             #print("action_gt",action_gt)
@@ -552,7 +607,7 @@ def finetune(cfg: FinetuneConfig) -> None:
             action_l1_loss = torch.nn.functional.l1_loss(continuous_actions_pred, continuous_actions_gt)
 
             # Store recent train metrics
-            recent_losses.append(loss.item())
+            recent_losses.append(losses2.item())
             recent_action_accuracies.append(action_accuracy.item())
             recent_l1_losses.append(action_l1_loss.item())
 
@@ -566,16 +621,18 @@ def finetune(cfg: FinetuneConfig) -> None:
             smoothened_action_accuracy = sum(recent_action_accuracies) / len(recent_action_accuracies)
             smoothened_l1_loss = sum(recent_l1_losses) / len(recent_l1_losses)
 
+            epoch_losses.append(smoothened_loss)
+
             # Push Metrics to W&B (every 10 gradient steps)
-            if distributed_state.is_main_process and gradient_step_idx % 10 == 0:
-                wandb.log(
-                    {
-                        "train_loss": smoothened_loss,
-                        "action_accuracy": smoothened_action_accuracy,
-                        "l1_loss": smoothened_l1_loss,
-                    },
-                    step=gradient_step_idx,
-                )
+            # if distributed_state.is_main_process and gradient_step_idx % 10 == 0:
+            #     wandb.log(
+            #         {
+            #             "train_loss": smoothened_loss,
+            #             "action_accuracy": smoothened_action_accuracy,
+            #             "l1_loss": smoothened_l1_loss,
+            #         },
+            #         step=gradient_step_idx,
+            #     )
 
             # Optimizer Step
             if (batch_idx + 1) % cfg.grad_accumulation_steps == 0:
@@ -625,6 +682,22 @@ def finetune(cfg: FinetuneConfig) -> None:
                             merged_vla.save_pretrained(checkpoint_dir)
 
                             print(f"Saved Model Checkpoint for Step {gradient_step_idx} at: {checkpoint_dir}")
+                    print("Successfully saved!")
+                
+                #save loss figure
+                # 绘制loss变化曲线
+                plt.figure(figsize=(10, 6))
+                plt.plot(range(1, len(epoch_losses) + 1), epoch_losses, marker='o', label='Training Loss')
+                plt.title('Training Loss vs. Epochs')
+                plt.xlabel('Epochs')
+                plt.ylabel('Loss')
+                plt.grid(True)
+                plt.legend()
+                plt.tight_layout()
+
+                # 保存为png图片
+                plt.savefig('loss_vs_epochs.png')
+                plt.show()
 
                 # Block on Main Process Checkpointing
                 dist.barrier()
