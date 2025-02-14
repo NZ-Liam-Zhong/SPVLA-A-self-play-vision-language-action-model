@@ -325,3 +325,8 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_spatial_no_noops --vla_path "/root/autodl-fs/entropy-0.5-0.1/it-1" --run_root_dir "/root/autodl-fs/spatial-self-fintune-it2" --adapter_tmp_dir "/root/autodl-fs/spatial-self-fintune-weight-it2" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
 <br>
 ![image](https://github.com/user-attachments/assets/1cf418d7-5459-41fd-b31e-15291b790a66)
+loss不稳定<br>
+![image](https://github.com/user-attachments/assets/593747d6-2125-4043-a3b3-221d334c3098)<br>
+
+<br>先将其他的跑了<br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
