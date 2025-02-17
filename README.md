@@ -342,3 +342,6 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 
 <br>
 第一个实验准确率要重新evaluate一下
+<br>
+
+![image](https://github.com/user-attachments/assets/5a43e394-e616-4760-8b9c-57278c1e8b20)
