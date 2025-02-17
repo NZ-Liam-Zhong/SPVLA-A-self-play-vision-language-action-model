@@ -329,4 +329,7 @@ loss不稳定<br>
 ![image](https://github.com/user-attachments/assets/593747d6-2125-4043-a3b3-221d334c3098)<br>
 
 <br>先将其他的跑了<br>
-torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500 
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500 <br>
+
+![image](https://github.com/user-attachments/assets/697a6f40-a80e-4794-b6ac-8f1ca45478bd)
+
