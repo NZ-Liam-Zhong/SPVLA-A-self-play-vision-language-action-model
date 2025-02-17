@@ -339,3 +339,6 @@ loss曲线<br>
 ckpt再/root/autodl-fs/object-self-fintune-it-1/it-1<br>
 
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True
+
+<br>
+第一个实验准确率要重新evaluate一下
