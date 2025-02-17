@@ -334,4 +334,6 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 ![image](https://github.com/user-attachments/assets/697a6f40-a80e-4794-b6ac-8f1ca45478bd)
 刚开始的时候<br>
 ![image](https://github.com/user-attachments/assets/e4568655-8afe-46ac-a2b1-a617f3907698)
+loss曲线<br>
+![image](https://github.com/user-attachments/assets/3c54883e-91a0-4299-b78c-481c26d885b0)
 
