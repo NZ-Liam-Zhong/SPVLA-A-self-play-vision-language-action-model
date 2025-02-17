@@ -346,5 +346,9 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 
 ![image](https://github.com/user-attachments/assets/5a43e394-e616-4760-8b9c-57278c1e8b20)<br>
 
-87.6%正确率<br>
+0.5 0.1的时候87.6%正确率<br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500<br>
 
+这个任务对精确性要求更高，我觉得应该要对熵的要求更高<br>
+现在设置为0.4 0.1<br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
