@@ -336,4 +336,6 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 ![image](https://github.com/user-attachments/assets/e4568655-8afe-46ac-a2b1-a617f3907698)
 loss曲线<br>
 ![image](https://github.com/user-attachments/assets/3c54883e-91a0-4299-b78c-481c26d885b0)
+ckpt再/root/autodl-fs/object-self-fintune-it-1/it-1<br>
 
+python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True
