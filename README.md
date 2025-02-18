@@ -363,3 +363,12 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 
 <br>跑一下goal <br>
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_goal_no_noops --vla_path "/root/autodl-fs/openvla-7b-finetuned-libero-goal" --run_root_dir "/root/autodl-fs/goal-self-fintune-it1" --adapter_tmp_dir "/root/autodl-fs/goal-self-fintune-it1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
+<br>
+文件在这里<br>
+/root/autodl-fs/goal-self-fintune-it1/goal_ckpt<br>
+loss图片<br>
+![image](https://github.com/user-attachments/assets/15599980-6f17-490b-beed-5328e256d3b2)<br>
+test时候<br>
+python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/goal-self-fintune-it1/goal_ckpt --task_suite_name libero_goal --center_crop True
+![image](https://github.com/user-attachments/assets/6f7c9f01-ab25-46c5-a735-0f98306ee926)<br>
+
