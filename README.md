@@ -371,4 +371,4 @@ loss图片<br>
 test时候<br>
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/goal-self-fintune-it1/goal_ckpt --task_suite_name libero_goal --center_crop True
 ![image](https://github.com/user-attachments/assets/6f7c9f01-ab25-46c5-a735-0f98306ee926)<br>
-
+性能不好<br>
