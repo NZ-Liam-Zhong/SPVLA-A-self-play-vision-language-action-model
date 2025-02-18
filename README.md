@@ -352,3 +352,9 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 这个任务对精确性要求更高，我觉得应该要对熵的要求更高<br>
 现在设置为0.4 0.1<br>
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
+
+<br>在这里<br>
+/root/autodl-fs/0.4-0.1-object-self-fintune-it-1/object<br>
+运行曲线<br>
+![image](https://github.com/user-attachments/assets/fde04d82-2cf0-43ac-aa1a-5d3c39bca390)<br>
+python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/0.4-0.1-object-self-fintune-it-1/object --task_suite_name libero_object --center_crop True
