@@ -372,3 +372,8 @@ test时候<br>
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/goal-self-fintune-it1/goal_ckpt --task_suite_name libero_goal --center_crop True
 ![image](https://github.com/user-attachments/assets/6f7c9f01-ab25-46c5-a735-0f98306ee926)<br>
 性能不好<br>
+
+<br>
+新的参数<br>
+![image](https://github.com/user-attachments/assets/3f3aceb6-16f4-4577-a102-c5898f4cacbe)<br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 500
