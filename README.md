@@ -394,4 +394,7 @@ loss下降第一阶段是自博弈，第二阶段是寻找让熵最大<br>
 <br>在这里 /root/autodl-fs/0.4-0.1-object-self-fintune-it-1/it-1 <br>
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/0.4-0.1-object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True<br>
 ![image](https://github.com/user-attachments/assets/e73c2a96-62a5-40a4-a91c-cad9980adb3f)<br>
+效果不好<br>
 
+试一下0.5 0.05<br>
+torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds" --dataset_name libero_object_no_noops --run_root_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-it-1" --adapter_tmp_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-weight-it-1" --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 300<br>
