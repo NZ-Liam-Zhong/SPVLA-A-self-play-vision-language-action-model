@@ -380,4 +380,7 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 <br>
 在这里<br>
 /root/autodl-fs/0.4-0.1-object-self-fintune-it-1/it-1<br>
-python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/0.4-0.1-object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True
+python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/0.4-0.1-object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True<br>
+性能不好<br>
+
+试一下0.3 0.1<br>
