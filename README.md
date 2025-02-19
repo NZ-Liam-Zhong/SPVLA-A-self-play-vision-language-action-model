@@ -390,4 +390,5 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 loss下降第一阶段是自博弈，第二阶段是寻找让熵最大<br>
 
 87.4%<br>
+试一下0.5 0.1<br>
 
