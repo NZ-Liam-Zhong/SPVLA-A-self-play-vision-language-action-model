@@ -495,4 +495,8 @@ torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --da
 0.5 0.1 提高混乱度<br>
 /root/autodl-fs/0.5-0.1-object-self-fintune-it-1/it-1<br>
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/0.5-0.1-object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True<br>
-![image](https://github.com/user-attachments/assets/5f14fa48-ae9b-4777-a25d-a44aa999eded)
+![image](https://github.com/user-attachments/assets/5f14fa48-ae9b-4777-a25d-a44aa999eded)<br><br>
+<br>
+![image](https://github.com/user-attachments/assets/df6898c0-0d92-4f32-9338-1d7ad389ca84)<br>
+![image](https://github.com/user-attachments/assets/5d41a715-a727-4fec-88be-e4ca46dda00f)<br>
+
