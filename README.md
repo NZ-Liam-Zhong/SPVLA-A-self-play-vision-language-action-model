@@ -499,4 +499,4 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 <br>
 ![image](https://github.com/user-attachments/assets/df6898c0-0d92-4f32-9338-1d7ad389ca84)<br>
 ![image](https://github.com/user-attachments/assets/5d41a715-a727-4fec-88be-e4ca46dda00f)<br>
-
+85.4<br>
