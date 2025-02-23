@@ -513,3 +513,5 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 
 
 最大化熵 0.9 0.05<br>
+object参数概率大幅度下降<br>
+调参数要看到各个细节参数变化情况<br>
