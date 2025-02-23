@@ -507,3 +507,5 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 
 
 最小化熵 0.5 0.2<br>
+/root/autodl-fs/0.5-0.1-object-self-fintune-it-1/it-1<br>
+python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/0.5-0.1-object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop
