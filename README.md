@@ -518,3 +518,5 @@ object参数概率大幅度下降<br>
 本来大概是<br>
 ![image](https://github.com/user-attachments/assets/08e08b5c-1fa0-4270-8b3a-50bc7caf0b65)<br>
 如果参数不好会直接-12到12之间<br>
+
+normalized loss也加进去<br>
