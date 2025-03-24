@@ -520,3 +520,7 @@ object参数概率大幅度下降<br>
 如果参数不好会直接-12到12之间<br>
 
 normalized loss也加进去<br>
+
+hinge的权重<br>
+/root/autodl-fs/hinge-0.4-0.1-object-self-fintune-it-1/it-1<br>
+python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/hinge-0.4-0.1-object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True
