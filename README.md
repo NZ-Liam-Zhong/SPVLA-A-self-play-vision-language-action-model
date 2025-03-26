@@ -70,6 +70,10 @@ datasets to the RLDS format [here](https://github.com/moojink/rlds_dataset_build
 ```bash
 git clone git@hf.co:datasets/openvla/modified_libero_rlds
 ```
+
+#### 下载已有权重
+去openvla界面，下载huggingface里面openvla的libero simulation已经finetune的权重
+
 训练的时候
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/selfplay.py --data_root_dir "/root/autodl-fs/modified_libero_rlds"（数据集位置）--vla_path “下载openvla已经有的ckpt” --dataset_name libero_object_no_noops（这里选择任务） --run_root_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-it-1"（选择想要保存的ckpt位置） --adapter_tmp_dir "/root/autodl-fs/0.4-0.1-object-self-fintune-weight-it-1"（lora的ckpt的位置） --lora_rank 32 --batch_size 20 --grad_accumulation_steps 1 --learning_rate 5e-4 --image_aug False --save_steps 300
 
