@@ -40,7 +40,7 @@ We copy the results to the section below and then discuss if we have improved th
 | Diffusion Policy from scratch | 78.3 ± 1.1% | **92.5 ± 0.7%** | 68.3 ± 1.2% | 50.5 ± 1.3% | 72.4 ± 0.7% |
 | Octo fine-tuned | 78.9 ± 1.0% | 85.7 ± 0.9% | **84.6 ± 0.9%** | 51.1 ± 1.3% | 75.1 ± 0.6% |
 | OpenVLA| **84.7 ± 0.9%** | 88.4 ± 0.8% | 79.2 ± 1.0% | **53.7 ± 1.3%** | **76.5 ± 0.6%** |
-|(ours) | **87.4%** | 87.6% | 78.2% | **54.7** | **暂无** |
+|SPIN Advantages | **87.4%** | 87.6% | 78.2% | **54.7** | **暂无** |
 
 Each success rate is the average over 3 random seeds x 500 rollouts each (10 tasks x 50 rollouts per task).
 
