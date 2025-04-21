@@ -450,3 +450,8 @@ python experiments/robot/libero/run_libero_eval.py --model_family openvla --pret
 python experiments/robot/libero/run_libero_eval.py --model_family openvla --pretrained_checkpoint /root/autodl-fs/lr1e-5--0.4-0.1-object-self-fintune-it-1/it-1 --task_suite_name libero_object --center_crop True
 
 BYOL+slfplay 82.4%
+
+
+微调基于base<br>
+![image](https://github.com/user-attachments/assets/50a3a5eb-e146-4971-a42b-827ce6998b75)<br>
+
