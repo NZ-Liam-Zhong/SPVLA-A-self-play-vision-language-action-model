@@ -84,7 +84,8 @@ class FinetuneConfig:
     # fmt: off
 
     #object的finetune
-    vla_path: str = "/root/autodl-tmp/openvla-7b-finetuned-libero-spatial"                            # Path to OpenVLA model (on HuggingFace Hub)
+    vla_path: str = "/root/autodl-fs/openvla-7b-finetuned-libero-object" 
+    vla_path_base: str = "/root/autodl-fs/openvla-7b-prismatic"                           # Path to OpenVLA model (on HuggingFace Hub)
 
     # Directory Paths
     data_root_dir: Path = Path("datasets/open-x-embodiment")        # Path to Open-X dataset directory
@@ -95,8 +96,8 @@ class FinetuneConfig:
     # Fine-tuning Parameters
     batch_size: int = 16                                            # Fine-tuning batch size
     #max_steps: int = 200_000
-    max_steps: int = 3_000                                        # Max number of fine-tuning steps
-    save_steps: int = 1000                                          # Interval for checkpoint saving
+    max_steps: int = 50_000                                        # Max number of fine-tuning steps
+    save_steps: int = 1000  
     learning_rate: float = 2e-5                                     # Fine-tuning learning rate
     grad_accumulation_steps: int = 1                                # Gradient accumulation steps
     image_aug: bool = True                                          # Whether to train with image augmentations
@@ -151,7 +152,7 @@ def spin_loss(
         entropy_regular=opponent_real_logps - policy_generated_logps
 
         beta=0.5
-        eta=0.1
+        eta=0.01
 
         if reference_free:
             ref_logratios = 0
@@ -160,10 +161,10 @@ def spin_loss(
 
         if loss_type == "sigmoid":
             #print("we are using sigmoid")
-            losses = -F.logsigmoid(beta * logits+eta*entropy_regular)
+            losses = -F.logsigmoid(beta * logits-eta*entropy_regular)
         elif loss_type == "hinge":
             #print("we are using hinge")
-            losses = torch.relu(1 - beta * logits+eta*entropy_regular)
+            losses = torch.relu(1 - beta * logits-eta*entropy_regular)
         else:
             raise ValueError(f"Unknown loss type: . Should be one of ['sigmoid', 'hinge']")
 
@@ -184,6 +185,7 @@ def spin_loss(
         return losses, real_rewards, generated_rewards
 
 def _get_batch_logps(
+        mask:torch.Tensor,
         logits: torch.FloatTensor,
         labels: torch.LongTensor,
         average_log_prob: bool = False,
@@ -221,10 +223,16 @@ def _get_batch_logps(
 
         #device = logits.device
         #loss_mask=torch.ones(1,37).to(device)
-        loss_mask = (labels != -100).int().to(labels.device)
+        
+        loss_mask = mask.to(labels.device)
+        #print("loss_mask",loss_mask)
+
+        # print("begin",begin)
         # print("mask",loss_mask)
         labels = labels.clone()  # Use .clone() to avoid inplace modification
-        labels[labels == -100] = 0
+        #print("labels 1",labels)
+        labels = labels*loss_mask
+        #print("labels 2",labels)
         # print("logits shape",logits.shape)
         # print("labels.unsqueeze(2) shape",labels.unsqueeze(2).shape)
         # print("Max label index:", labels.max())
@@ -236,9 +244,17 @@ def _get_batch_logps(
         # 对 logits 的每个值除以 10
         #scaled_logits = logits / 10
         # 计算 log softmax
+        #print("logits",logits)
+
+        #这里改了，原来是用这样合适一点
         log_softmax_logits = logits.log_softmax(-1)
+        #log_softmax_logits = logits.softmax(dim=-1)
+
+
+        #print("log_softmax_logits",log_softmax_logits)
         # 按照 labels 的索引提取每个 token 的 log probability
         per_token_logps = torch.gather(log_softmax_logits, dim=2, index=labels.unsqueeze(2)).squeeze(2)
+        #print("per_token_logps",per_token_logps)
 
 
 
@@ -306,9 +322,9 @@ def finetune(cfg: FinetuneConfig) -> None:
     AutoModelForVision2Seq.register(OpenVLAConfig, OpenVLAForActionPrediction)
 
     # Load OpenVLA Processor and Model using HF AutoClasses
-    processor = AutoProcessor.from_pretrained(cfg.vla_path, trust_remote_code=False)
+    processor = AutoProcessor.from_pretrained(cfg.vla_path_base, trust_remote_code=False)
     vla = AutoModelForVision2Seq.from_pretrained(
-        cfg.vla_path,
+        cfg.vla_path_base,
         torch_dtype=torch.bfloat16,
         quantization_config=quantization_config,
         low_cpu_mem_usage=True,
@@ -535,8 +551,15 @@ def finetune(cfg: FinetuneConfig) -> None:
             #print("action_preds",action_preds.shape)
             # action_logits torch.Size([16, 37, 32064])
             # action_preds torch.Size([16, 37])
+            # mask = action_gt > action_tokenizer.action_token_begin_idx
+            # print("action_gt",action_gt)
+            # print("tokenizer",action_tokenizer.action_token_begin_idx)
+            # print("mask",mask)
+
+            mask = action_gt > action_tokenizer.action_token_begin_idx
 
             policy_generated_logps = _get_batch_logps(
+            mask,
             action_logits,#(-15,60)
             action_preds,
             average_log_prob=True,
@@ -544,18 +567,21 @@ def finetune(cfg: FinetuneConfig) -> None:
             print("policy_generated_logps",policy_generated_logps)
 
             policy_real_logps = _get_batch_logps(
+            mask,
             action_logits,
             action_gt,
             average_log_prob=True,
         )
             print("policy_real_logps",policy_real_logps)
             opponent_generated_logps = _get_batch_logps(
+            mask,
             ref_action_logits,#(-30,80)
             ref_action_preds,
             average_log_prob=True,
         )
             print("opponent_generated_logps",opponent_generated_logps)
             opponent_real_logps = _get_batch_logps(
+            mask,
             ref_action_logits,
             action_gt,
             average_log_prob=True,
@@ -568,6 +594,9 @@ def finetune(cfg: FinetuneConfig) -> None:
             opponent_generated_logps,
         )
             losses2=losses/ cfg.grad_accumulation_steps
+            normalized_loss2=normalized_loss
+            losses2=losses2+normalized_loss2
+            #losses2=normalized_loss
             losses2.backward()#0.6
 
             #看看我的losses是什么
