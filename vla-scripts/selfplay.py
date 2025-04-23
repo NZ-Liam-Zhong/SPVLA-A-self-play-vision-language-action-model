@@ -84,7 +84,7 @@ class FinetuneConfig:
     # fmt: off
 
     #object的finetune
-    vla_path: str = "/root/autodl-fs/openvla-7b-finetuned-libero-object" 
+    vla_path: str = "/root/autodl-fs/openvla-7b-finetuned-libero-spatial" 
     vla_path_base: str = "/root/autodl-fs/openvla-7b-prismatic"                           # Path to OpenVLA model (on HuggingFace Hub)
 
     # Directory Paths
@@ -652,16 +652,19 @@ def finetune(cfg: FinetuneConfig) -> None:
 
             epoch_losses.append(smoothened_loss)
 
-            # Push Metrics to W&B (every 10 gradient steps)
-            # if distributed_state.is_main_process and gradient_step_idx % 10 == 0:
-            #     wandb.log(
-            #         {
-            #             "train_loss": smoothened_loss,
-            #             "action_accuracy": smoothened_action_accuracy,
-            #             "l1_loss": smoothened_l1_loss,
-            #         },
-            #         step=gradient_step_idx,
-            #     )
+            Push Metrics to W&B (every 10 gradient steps)
+            if distributed_state.is_main_process and gradient_step_idx % 10 == 0:
+                wandb.log(
+                    {
+                        "train_loss": smoothened_loss,
+                        "action_accuracy": smoothened_action_accuracy,
+                        "l1_loss": smoothened_l1_loss,
+                        "normalized_loss":normalized_loss,
+                        "selfplay_loss":losses,
+                        "total_loss":losses2,
+                    },
+                    step=gradient_step_idx,
+                )
 
             # Optimizer Step
             if (batch_idx + 1) % cfg.grad_accumulation_steps == 0:
